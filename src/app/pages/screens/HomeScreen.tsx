@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, ButtonGroup } from 'react-native-elements';
-import { HeaderComponent } from '../../components/HeaderComp';
+import { HeaderComponent } from '../../components/HeaderComponent';
+import { LatestComponent } from '../../components/LatestComponent';
 /**
  * Home props
  */
@@ -43,6 +44,7 @@ export class HomeScreen extends React.Component<HomeProps, HomeState> {
 					selectedButtonStyle={styles.selectedButton}
 					selectedTextStyle={styles.selectedTextStyle}
 				/>
+				<LatestComponent></LatestComponent>
 			</View>
 		);
 	}
