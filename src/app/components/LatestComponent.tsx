@@ -13,6 +13,7 @@ export interface LatestProps {
  */
 export interface LatestState {
 	latestData: any;
+	categoriesData: any;
 	loading: boolean;
 }
 
@@ -33,6 +34,7 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 		super(props);
 		this.state = {
 			latestData: [],
+			categoriesData: [],
 			loading: true
 		};
 	}
@@ -42,14 +44,38 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 			//Assign the promise unresolved first then get the data using the json method.
 			const latestData = await fetch('https://forum.manjaro.org/latest.json');
 			const latestDataV = await latestData.json();
-			this.setState({ latestData: latestDataV, loading: false });
+			this.setState({ latestData: latestDataV });
+			this.getCategories();
 			//console.log(latestDataV.topic_list.topics[0].id);
 		} catch (err) {
 			console.log('Error fetching data', err);
 		}
 	}
+	async getCategories() {
+		try {
+			//Assign the promise unresolved first then get the data using the json method.
+			const categoriesData = await fetch('https://forum.manjaro.org/categories.json');
+			const categoriesDataV = await categoriesData.json();
+			this.setState({ categoriesData: categoriesDataV, loading: false });
+			//console.log(latestDataV.topic_list.topics[0].id);
+			this.findNameOfCategory(8);
+		} catch (err) {
+			console.log('Error fetching data', err);
+		}
+	}
+	findNameOfCategory = (id: number) => {
+		const { categoriesData } = this.state;
+		return (
+			<View>
+				{categoriesData.category_list.map(function({ item }) {
+					if (item.categories.id == id) {
+						return <Text>{item.categories.name}</Text>;
+					}
+				})}
+			</View>
+		);
+	};
 	_renderItem({ item }) {
-		console.log(item);
 		return <ListItem title={item.title} subtitle={item.views} bottomDivider chevron />;
 	}
 	keyExtractor = (item, index) => index.toString();

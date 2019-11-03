@@ -64,9 +64,9 @@ export class HeaderComponent extends React.Component<HeaderProps, HeaderState> {
 		return (
 			<Header
 				placement="left"
-				leftComponent={{ icon: 'menu', color: '#fff' }}
+				//leftComponent={{ icon: 'menu', color: '#fff' }}
 				centerComponent={{ text: this.props.headerTitle, style: { color: '#fff' } }}
-				rightComponent={{ icon: 'home', color: '#fff' }}
+				//rightComponent={{ icon: 'home', color: '#fff' }}
 				containerStyle={styles.header}
 			/>
 		);
