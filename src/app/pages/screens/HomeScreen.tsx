@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Text, ButtonGroup } from 'react-native-elements';
 import { HeaderComponent } from '../../components/HeaderComp';
 /**
  * Home props
@@ -19,21 +19,30 @@ export interface HomeState {}
 export class HomeScreen extends React.Component<HomeProps, HomeState> {
 	constructor(props: HomeProps) {
 		super(props);
-		this.state = {};
+		this.state = {
+			selectedTab: 0
+		};
+		this.updateIndex = this.updateIndex.bind(this);
 	}
-	static navigationOptions = {
-		title: 'Home'
-	};
+	updateIndex(selectedIndex) {
+		this.setState({ selectedTab: selectedIndex });
+	}
 	/**
 	 * Renders home
 	 * @returns
 	 */
 	render() {
+		const { selectedTab } = this.state;
 		return (
 			<View>
 				<HeaderComponent></HeaderComponent>
-				<Text h1>Heading 1</Text>
-				<Text h2>TEst 1</Text>
+				<ButtonGroup
+					buttons={['Latest', 'New', 'Top']}
+					onPress={this.updateIndex}
+					selectedIndex={selectedTab}
+					selectedButtonStyle={styles.selectedButton}
+					selectedTextStyle={styles.selectedTextStyle}
+				/>
 			</View>
 		);
 	}
@@ -42,5 +51,11 @@ export class HomeScreen extends React.Component<HomeProps, HomeState> {
 const styles: any = StyleSheet.create({
 	container: {
 		backgroundColor: '#FBFAFA'
+	},
+	selectedButton: {
+		backgroundColor: '#8BC34A'
+	},
+	selectedTextStyle: {
+		color: '#FBFAFA'
 	}
 });
