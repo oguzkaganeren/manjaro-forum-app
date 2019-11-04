@@ -65,15 +65,11 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 	}
 	findNameOfCategory = (id: number) => {
 		const { categoriesData } = this.state;
-		return (
-			<View>
-				{categoriesData.category_list.map(function({ item }) {
-					if (item.categories.id == id) {
-						return <Text>{item.categories.name}</Text>;
-					}
-				})}
-			</View>
-		);
+		const data = Object.values(categoriesData).map(function(item, index) {
+			//if (item[index].id == id) {
+			console.log(item);
+			//}
+		});
 	};
 	_renderItem({ item }) {
 		return <ListItem title={item.title} subtitle={item.views} bottomDivider chevron />;
