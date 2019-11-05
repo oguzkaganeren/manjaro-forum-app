@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Header } from 'react-native-elements';
+import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
 /**
  * Header props
  */
@@ -62,13 +62,29 @@ export class HeaderComponent extends React.Component<HeaderProps, HeaderState> {
 	 */
 	render() {
 		return (
-			<Header
-				placement="left"
-				//leftComponent={{ icon: 'menu', color: '#fff' }}
-				centerComponent={{ text: this.props.headerTitle, style: { color: '#fff' } }}
-				//rightComponent={{ icon: 'home', color: '#fff' }}
-				containerStyle={styles.header}
-			/>
+			<Container>
+				<Header>
+					<Left>
+						<Button transparent>
+							<Icon name="arrow-back" />
+						</Button>
+					</Left>
+					<Body>
+						<Title>{this.props.headerTitle}</Title>
+					</Body>
+					<Right>
+						<Button transparent>
+							<Icon name="search" />
+						</Button>
+						<Button transparent>
+							<Icon name="heart" />
+						</Button>
+						<Button transparent>
+							<Icon name="more" />
+						</Button>
+					</Right>
+				</Header>
+			</Container>
 		);
 	}
 }

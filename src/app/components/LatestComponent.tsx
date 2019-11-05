@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, ActivityIndicator, View, TouchableOpacity, FlatList } from 'react-native';
-import { ListItem, Text } from 'react-native-elements';
+import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text } from 'native-base';
 /**
  * Latest props
  */
@@ -58,21 +58,34 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 			const categoriesDataV = await categoriesData.json();
 			this.setState({ categoriesData: categoriesDataV, loading: false });
 			//console.log(latestDataV.topic_list.topics[0].id);
-			this.findNameOfCategory(8);
+			//this.findNameOfCategory(8);
 		} catch (err) {
 			console.log('Error fetching data', err);
 		}
 	}
 	findNameOfCategory = (id: number) => {
 		const { categoriesData } = this.state;
-		const data = Object.values(categoriesData).map(function(item, index) {
-			//if (item[index].id == id) {
-			console.log(item);
-			//}
+		const data = Object.values(categoriesData)[0].categories.map(function(item) {
+			if (item.id == id) {
+				return item.name;
+			}
 		});
 	};
 	_renderItem({ item }) {
-		return <ListItem title={item.title} subtitle={item.views} bottomDivider chevron />;
+		return (
+			<ListItem avatar>
+				<Left>
+					<Thumbnail source={{ uri: 'Image URL' }} />
+				</Left>
+				<Body>
+					<Text>{item.title}</Text>
+					<Text note>Doing what you like will always keep you happy . .</Text>
+				</Body>
+				<Right>
+					<Text note>3:43 pm</Text>
+				</Right>
+			</ListItem>
+		);
 	}
 	keyExtractor = (item, index) => index.toString();
 	/**

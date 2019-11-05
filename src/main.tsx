@@ -1,8 +1,7 @@
 import React from 'react';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
-import { StyleSheet, Text, View } from 'react-native';
 import { HomeScreen } from './app/pages/screens/HomeScreen';
-import { ThemeProvider } from 'react-native-elements';
+import { Container } from 'native-base';
 /**
  * Define navigator
  */
@@ -26,7 +25,7 @@ const RootSwitch = createSwitchNavigator(
 const App = createAppContainer(RootSwitch);
 
 export default () => (
-	<ThemeProvider>
+	<Container>
 		<App />
-	</ThemeProvider>
+	</Container>
 );

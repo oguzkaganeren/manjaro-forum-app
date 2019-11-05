@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text, ButtonGroup } from 'react-native-elements';
 import { HeaderComponent } from '../../components/HeaderComponent';
 import { LatestComponent } from '../../components/LatestComponent';
 /**
@@ -37,13 +36,6 @@ export class HomeScreen extends React.Component<HomeProps, HomeState> {
 		return (
 			<View>
 				<HeaderComponent></HeaderComponent>
-				<ButtonGroup
-					buttons={['Latest', 'New', 'Top']}
-					onPress={this.updateIndex}
-					selectedIndex={selectedTab}
-					selectedButtonStyle={styles.selectedButton}
-					selectedTextStyle={styles.selectedTextStyle}
-				/>
 				<LatestComponent></LatestComponent>
 			</View>
 		);
