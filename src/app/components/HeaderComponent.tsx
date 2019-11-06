@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
+import { Icon, TopNavigation, TopNavigationAction } from 'react-native-ui-kitten';
+import { Constants } from 'expo';
 /**
  * Header props
  */
@@ -24,7 +25,17 @@ export class HeaderComponent extends React.Component<HeaderProps, HeaderState> {
 	 * Default props of header component
 	 */
 	static defaultProps = { hasBackButton: false, headerTitle: 'Manjaro Forum' };
+	BackIcon = style => <Icon {...style} name="arrow-back" />;
 
+	EditIcon = style => <Icon {...style} name="edit" />;
+
+	MenuIcon = style => <Icon {...style} name="more-vertical" />;
+
+	BackAction = props => <TopNavigationAction {...props} icon={this.BackIcon} />;
+
+	EditAction = props => <TopNavigationAction {...props} icon={this.EditIcon} />;
+
+	MenuAction = props => <TopNavigationAction {...props} icon={this.MenuIcon} />;
 	/**
 	 * Creates an instance of header component.
 	 * @param props
@@ -61,30 +72,17 @@ export class HeaderComponent extends React.Component<HeaderProps, HeaderState> {
 	 * @returns
 	 */
 	render() {
+		const onBackPress = () => {};
+
+		const renderLeftControl = () => <this.BackAction onPress={onBackPress} />;
+
+		const renderRightControls = () => [<this.EditAction />, <this.MenuAction />];
 		return (
-			<Container>
-				<Header>
-					<Left>
-						<Button transparent>
-							<Icon name="arrow-back" />
-						</Button>
-					</Left>
-					<Body>
-						<Title>{this.props.headerTitle}</Title>
-					</Body>
-					<Right>
-						<Button transparent>
-							<Icon name="search" />
-						</Button>
-						<Button transparent>
-							<Icon name="heart" />
-						</Button>
-						<Button transparent>
-							<Icon name="more" />
-						</Button>
-					</Right>
-				</Header>
-			</Container>
+			<TopNavigation
+				title={this.props.headerTitle}
+				leftControl={renderLeftControl()}
+				rightControls={renderRightControls()}
+			/>
 		);
 	}
 }
@@ -92,12 +90,7 @@ export class HeaderComponent extends React.Component<HeaderProps, HeaderState> {
 const styles: any = StyleSheet.create({
 	header: {
 		//paddingTop: 20,
-		backgroundColor: '#8BC34A'
 		// borderWidth: 0,
 		//flex: 1,
-	},
-	title: {
-		alignSelf: 'flex-end',
-		color: '#424242'
 	}
 });

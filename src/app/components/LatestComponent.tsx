@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, ActivityIndicator, View, TouchableOpacity, FlatList } from 'react-native';
-import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text } from 'native-base';
+import { List, ListItem, Layout, Text } from 'react-native-ui-kitten';
 /**
  * Latest props
  */
@@ -72,20 +72,7 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 		});
 	};
 	_renderItem({ item }) {
-		return (
-			<ListItem avatar>
-				<Left>
-					<Thumbnail source={{ uri: 'Image URL' }} />
-				</Left>
-				<Body>
-					<Text>{item.title}</Text>
-					<Text note>Doing what you like will always keep you happy . .</Text>
-				</Body>
-				<Right>
-					<Text note>3:43 pm</Text>
-				</Right>
-			</ListItem>
-		);
+		return <ListItem title={item.title} />;
 	}
 	keyExtractor = (item, index) => index.toString();
 	/**
@@ -98,7 +85,7 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 		if (!loading) {
 			//console.log(latestData.topic_list.topics[0].id);
 			return (
-				<FlatList data={latestData.topic_list.topics} renderItem={this._renderItem} keyExtractor={this.keyExtractor} />
+				<List data={latestData.topic_list.topics} renderItem={this._renderItem} keyExtractor={this.keyExtractor} />
 			);
 		} else {
 			return <ActivityIndicator />;

@@ -2,12 +2,12 @@ import { AppLoading } from 'expo';
 import * as React from 'react';
 import App from '../../main';
 import * as Font from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
 /**
  * State
  */
 export interface State {
-	isLoading: boolean;
-	isReady: boolean;
+	loading: boolean;
 }
 
 /**
@@ -21,37 +21,31 @@ export default class Setup extends React.Component<{}, State> {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isLoading: false,
-			isReady: false
+			loading: true
 		};
-	}
-
-	/**
-	 * Components will mount
-	 */
-	componentWillMount() {
-		this.loadFonts();
 	}
 
 	/**
 	 * Loads fonts
 	 */
-	async loadFonts() {
-		await Font.loadAsync({
-			Roboto: require('../../../node_modules/native-base/Fonts/Roboto.ttf'),
-			Roboto_medium: require('../../../node_modules/native-base/Fonts/Roboto_medium.ttf')
+	componentDidMount = async () => {
+		Font.loadAsync({
+			Roboto: require('../../../assets/Roboto.ttf'),
+			Roboto_medium: require('../../../assets/Roboto_medium.ttf'),
+			...Ionicons.font
 		});
-		this.setState({ isReady: true });
-	}
+		this.setState({ loading: false });
+	};
 
 	/**
 	 * Renders setup
 	 * @returns
 	 */
 	render() {
-		if (!this.state.isReady || this.state.isLoading) {
+		if (this.state.loading) {
 			return <AppLoading />;
+		} else {
+			return <App></App>;
 		}
-		return <App />;
 	}
 }

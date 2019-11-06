@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { HeaderComponent } from '../../components/HeaderComponent';
 import { LatestComponent } from '../../components/LatestComponent';
+import { Button, Layout, Text } from 'react-native-ui-kitten';
 /**
  * Home props
  */
@@ -34,10 +35,10 @@ export class HomeScreen extends React.Component<HomeProps, HomeState> {
 	render() {
 		const { selectedTab } = this.state;
 		return (
-			<View>
+			<Layout>
 				<HeaderComponent></HeaderComponent>
 				<LatestComponent></LatestComponent>
-			</View>
+			</Layout>
 		);
 	}
 }
