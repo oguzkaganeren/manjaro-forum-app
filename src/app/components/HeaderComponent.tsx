@@ -25,15 +25,7 @@ export class HeaderComponent extends React.Component<HeaderProps, HeaderState> {
 	 * Default props of header component
 	 */
 	static defaultProps = { hasBackButton: false, headerTitle: 'Manjaro Forum' };
-	BackIcon = style => <Icon {...style} name="arrow-back" />;
-
-	EditIcon = style => <Icon {...style} name="edit" />;
-
-	MenuIcon = style => <Icon {...style} name="more-vertical" />;
-
-	BackAction = props => <TopNavigationAction {...props} icon={this.BackIcon} />;
-
-	EditAction = props => <TopNavigationAction {...props} icon={this.EditIcon} />;
+	MenuIcon = style => <Icon {...style} name="menu-outline" />;
 
 	MenuAction = props => <TopNavigationAction {...props} icon={this.MenuIcon} />;
 	/**
@@ -74,17 +66,8 @@ export class HeaderComponent extends React.Component<HeaderProps, HeaderState> {
 	render() {
 		const onBackPress = () => {};
 
-		const renderLeftControl = () => <this.BackAction onPress={onBackPress} />;
-
-		const renderRightControls = () => [<this.EditAction />, <this.MenuAction />];
-		return (
-			<TopNavigation
-				style={styles.container}
-				title={this.props.headerTitle}
-				leftControl={renderLeftControl()}
-				rightControls={renderRightControls()}
-			/>
-		);
+		const renderLeftControl = () => <this.MenuAction onPress={onBackPress} />;
+		return <TopNavigation style={styles.container} title={this.props.headerTitle} leftControl={renderLeftControl()} />;
 	}
 }
 
