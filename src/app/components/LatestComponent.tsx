@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, ActivityIndicator, View, TouchableOpacity, FlatList } from 'react-native';
-import { List, ListItem, Layout, Text } from 'react-native-ui-kitten';
+import { List, ListItem, Avatar, Layout, CheckBox } from 'react-native-ui-kitten';
 /**
  * Latest props
  */
@@ -72,7 +72,15 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 		});
 	};
 	_renderItem({ item }) {
-		return <ListItem title={item.title} />;
+		console.log(item);
+		return <ListItem title={item.title} description={item.tags} accessory={this.RemoteAvatar} />;
+	}
+	RemoteAvatar({ item }) {
+		return (
+			<Layout style={styles.container}>
+				<Avatar source={{ uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330' }} />
+			</Layout>
+		);
 	}
 	keyExtractor = (item, index) => index.toString();
 	/**
