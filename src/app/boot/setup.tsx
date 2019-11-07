@@ -1,8 +1,7 @@
 import { AppLoading } from 'expo';
 import * as React from 'react';
 import App from '../../main';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-navigation';
 /**
  * State
  */
@@ -29,11 +28,6 @@ export default class Setup extends React.Component<{}, State> {
 	 * Loads fonts
 	 */
 	componentDidMount = async () => {
-		Font.loadAsync({
-			Roboto: require('../../../assets/Roboto.ttf'),
-			Roboto_medium: require('../../../assets/Roboto_medium.ttf'),
-			...Ionicons.font
-		});
 		this.setState({ loading: false });
 	};
 

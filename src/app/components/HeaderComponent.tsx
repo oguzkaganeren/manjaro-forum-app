@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform, View } from 'react-native';
 import { Icon, TopNavigation, TopNavigationAction } from 'react-native-ui-kitten';
-import { Constants } from 'expo';
+import Constants from 'expo-constants';
 /**
  * Header props
  */
@@ -79,6 +79,7 @@ export class HeaderComponent extends React.Component<HeaderProps, HeaderState> {
 		const renderRightControls = () => [<this.EditAction />, <this.MenuAction />];
 		return (
 			<TopNavigation
+				style={styles.container}
 				title={this.props.headerTitle}
 				leftControl={renderLeftControl()}
 				rightControls={renderRightControls()}
@@ -92,5 +93,8 @@ const styles: any = StyleSheet.create({
 		//paddingTop: 20,
 		// borderWidth: 0,
 		//flex: 1,
+	},
+	container: {
+		marginTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight
 	}
 });
