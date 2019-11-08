@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, ActivityIndicator, View, TouchableOpacity, FlatList } from 'react-native';
-import { List, ListItem, Avatar, Layout, CheckBox } from 'react-native-ui-kitten';
+import { List, ListItem, Avatar, Layout, Text } from 'react-native-ui-kitten';
 /**
  * Latest props
  */
@@ -63,24 +63,25 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 			console.log('Error fetching data', err);
 		}
 	}
-	findNameOfCategory = (id: number) => {
+	findNameOfCategory = (id: any): string => {
 		const { categoriesData } = this.state;
+		let itemName;
 		const data = Object.values(categoriesData)[0].categories.map(function(item) {
 			if (item.id == id) {
-				return item.name;
+				itemName = item.name;
 			}
 		});
+		return itemName;
 	};
 	_renderItem({ item }) {
-		console.log(item);
-		return <ListItem title={item.title} description={item.tags} accessory={this.RemoteAvatar} />;
-	}
-	RemoteAvatar({ item }) {
 		return (
-			<Layout style={styles.container}>
+			<Layout key={item.key}>
+				<Text>{item.title}</Text>
+				<Text style={{ color: 'red' }}>{this.findNameOfCategory(item.category_id)}</Text>
 				<Avatar source={{ uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330' }} />
 			</Layout>
 		);
+		//return <ListItem title={item.title} description={item.tags} accessory={this.RemoteAvatar} />;
 	}
 	keyExtractor = (item, index) => index.toString();
 	/**
@@ -93,7 +94,11 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 		if (!loading) {
 			//console.log(latestData.topic_list.topics[0].id);
 			return (
-				<List data={latestData.topic_list.topics} renderItem={this._renderItem} keyExtractor={this.keyExtractor} />
+				<List
+					data={latestData.topic_list.topics}
+					renderItem={this._renderItem.bind(this)}
+					keyExtractor={this.keyExtractor}
+				/>
 			);
 		} else {
 			return <ActivityIndicator />;
