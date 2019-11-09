@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ActivityIndicator, View, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, ActivityIndicator } from 'react-native';
 import { List, ListItem, Avatar, Layout, Text } from 'react-native-ui-kitten';
 /**
  * Latest props
@@ -75,10 +75,17 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 	};
 	_renderItem({ item }) {
 		return (
-			<Layout key={item.key}>
-				<Text>{item.title}</Text>
-				<Text style={{ color: 'red' }}>{this.findNameOfCategory(item.category_id)}</Text>
-				<Avatar source={{ uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330' }} />
+			<Layout key={item.key} style={{ flexDirection: 'row' }}>
+				<Layout style={{ flex: 0.2 }}>
+					<Avatar
+						style={{ marginTop: 5, marginBottom: 5, marginLeft: 10 }}
+						source={{ uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330' }}
+					/>
+				</Layout>
+				<Layout style={{ flex: 1 }}>
+					<Text category="s1">{item.title}</Text>
+					<Text appearance="hint">{this.findNameOfCategory(item.category_id)}</Text>
+				</Layout>
 			</Layout>
 		);
 		//return <ListItem title={item.title} description={item.tags} accessory={this.RemoteAvatar} />;
