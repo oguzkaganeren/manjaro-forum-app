@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, ActivityIndicator } from 'react-native';
-import { List, ListItem, Avatar, Layout, Text } from 'react-native-ui-kitten';
+import { Icon, List, ListItem, Avatar, Layout, Text } from 'react-native-ui-kitten';
+import TimeAgo from 'react-native-timeago';
 /**
  * Latest props
  */
@@ -38,6 +39,7 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 			loading: true
 		};
 	}
+	MenuIcon = style => <Icon {...style} name="book-open-outline" />;
 	async componentDidMount() {
 		//Have a try and catch block for catching errors.
 		try {
@@ -97,6 +99,12 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 				<Layout style={{ flex: 1 }}>
 					<Text category="s1">{item.title}</Text>
 					<Text appearance="hint">{this.getNameOfCategory(item.category_id)}</Text>
+				</Layout>
+				<Layout style={{ flex: 0.2 }}>
+					<Text appearance="hint" style={{ textAlign: 'right', marginRight: 10 }}>
+						{item.views}
+					</Text>
+					<TimeAgo time={item.last_posted_at} hideAgo={true} />
 				</Layout>
 			</Layout>
 		);
