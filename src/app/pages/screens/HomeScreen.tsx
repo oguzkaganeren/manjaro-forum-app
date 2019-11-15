@@ -37,7 +37,7 @@ export class HomeScreen extends React.Component<HomeProps, HomeState> {
 		return (
 			<Layout>
 				<HeaderComponent></HeaderComponent>
-				<LatestComponent></LatestComponent>
+				<LatestComponent navigation={this.props.navigation}></LatestComponent>
 			</Layout>
 		);
 	}

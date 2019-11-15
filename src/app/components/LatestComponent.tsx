@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, ActivityIndicator } from 'react-native';
+import { StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { Icon, List, ListItem, Avatar, Layout, Text } from 'react-native-ui-kitten';
 import TimeAgo from 'react-native-timeago';
 /**
  * Latest props
  */
 export interface LatestProps {
-	//navigation: any;
+	navigation: any;
 }
 
 /**
@@ -86,27 +86,43 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 		});
 		return itemName;
 	};
+	_onPressButton(key) {
+		//console.log(key);
+		this.props.navigation.navigate('PostScreen', {
+			itemId: key
+		});
+		this.props.navigation.navigate('PostScreen');
+	}
 	_renderItem({ item }) {
 		return (
-			<Layout key={item.key} style={{ flexDirection: 'row' }}>
-				<Layout style={{ flex: 0.2 }}>
-					<Avatar
-						style={{ marginTop: 5, marginBottom: 5, marginLeft: 10 }}
-						source={{ uri: 'https://forum.manjaro.org' + this.getUserAvatar(item.posters[0].user_id) }}
-					/>
-					{console.log(this.getUserAvatar(item.posters[0].user_id))}
+			<TouchableOpacity key={item.id} onPress={() => this._onPressButton(item.id)}>
+				<Layout
+					style={{
+						flexDirection: 'row',
+						paddingBottom: 5,
+						paddingTop: 5,
+						borderBottomWidth: 0.2,
+						borderBottomColor: 'gray'
+					}}
+				>
+					<Layout style={{ flex: 0.2 }}>
+						<Avatar
+							style={{ marginTop: 5, marginBottom: 5, marginLeft: 10 }}
+							source={{ uri: 'https://forum.manjaro.org' + this.getUserAvatar(item.posters[0].user_id) }}
+						/>
+					</Layout>
+					<Layout style={{ flex: 1 }}>
+						<Text category="s1">{item.title}</Text>
+						<Text appearance="hint">{this.getNameOfCategory(item.category_id)}</Text>
+					</Layout>
+					<Layout style={{ flex: 0.3 }}>
+						<Text appearance="hint" style={{ textAlign: 'right', marginRight: 10 }}>
+							{item.views}
+						</Text>
+						<TimeAgo time={item.last_posted_at} hideAgo={true} />
+					</Layout>
 				</Layout>
-				<Layout style={{ flex: 1 }}>
-					<Text category="s1">{item.title}</Text>
-					<Text appearance="hint">{this.getNameOfCategory(item.category_id)}</Text>
-				</Layout>
-				<Layout style={{ flex: 0.2 }}>
-					<Text appearance="hint" style={{ textAlign: 'right', marginRight: 10 }}>
-						{item.views}
-					</Text>
-					<TimeAgo time={item.last_posted_at} hideAgo={true} />
-				</Layout>
-			</Layout>
+			</TouchableOpacity>
 		);
 		//return <ListItem title={item.title} description={item.tags} accessory={this.RemoteAvatar} />;
 	}

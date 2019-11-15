@@ -1,6 +1,7 @@
 import React from 'react';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { HomeScreen } from './app/pages/screens/HomeScreen';
+import { PostScreen } from './app/pages/screens/PostScreen';
 import { mapping, light as lightTheme } from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { ApplicationProvider, IconRegistry, Layout, Text } from 'react-native-ui-kitten';
@@ -10,10 +11,11 @@ import { ApplicationProvider, IconRegistry, Layout, Text } from 'react-native-ui
  */
 const RootSwitch = createSwitchNavigator(
 	{
-		Home: { screen: HomeScreen }
+		HomeScreen: { screen: HomeScreen },
+		PostScreen: { screen: PostScreen }
 	},
 	{
-		initialRouteName: 'Home'
+		initialRouteName: 'HomeScreen'
 	}
 );
 const App = createAppContainer(RootSwitch);
