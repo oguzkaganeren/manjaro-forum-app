@@ -86,16 +86,17 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 		});
 		return itemName;
 	};
-	_onPressButton(key) {
+	_onPressButton(key, title) {
 		//console.log(key);
 		this.props.navigation.navigate('PostScreen', {
-			itemId: key
+			itemId: key,
+			title: title
 		});
 		this.props.navigation.navigate('PostScreen');
 	}
 	_renderItem({ item }) {
 		return (
-			<TouchableOpacity key={item.id} onPress={() => this._onPressButton(item.id)}>
+			<TouchableOpacity key={item.id} onPress={() => this._onPressButton(item.id, item.title)}>
 				<Layout
 					style={{
 						flexDirection: 'row',
