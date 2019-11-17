@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
 import { Icon, List, ListItem, Avatar, Button, Layout, Text } from 'react-native-ui-kitten';
 import { HeaderComponent } from '../../components/HeaderComponent';
-import HTMLView from 'react-native-htmlview';
+import HTML from 'react-native-render-html';
 /**
  * Post props
  */
@@ -41,6 +41,7 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 		}
 	}
 	_renderItem({ item }) {
+		console.log(item.cooked);
 		return (
 			<TouchableOpacity key={item.id}>
 				<Layout
@@ -59,7 +60,17 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 						/>
 					</Layout>
 					<Layout style={{ flex: 1 }}>
-						<HTMLView value={item.cooked} stylesheet={styles} />
+						<HTML
+							renderers={{
+								p: (htmlAttribs, children, passProps) => (
+									<Text appearance="hint" style={{ textAlign: 'left', marginRight: 10 }} {...passProps}>
+										{children}
+									</Text>
+								)
+							}}
+							html={item.cooked}
+							imagesMaxWidth={Dimensions.get('window').width}
+						/>
 					</Layout>
 					<Layout style={{ flex: 0.3 }}>
 						<Text appearance="hint" style={{ textAlign: 'right', marginRight: 10 }}>
