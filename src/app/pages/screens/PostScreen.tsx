@@ -55,21 +55,22 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 				>
 					<Layout style={{ flex: 0.2 }}>
 						<Avatar
-							style={{ marginTop: 5, marginBottom: 5, marginLeft: 10 }}
+							style={{ marginTop: 20, marginBottom: 5, marginLeft: 10 }}
 							source={{ uri: 'https://forum.manjaro.org' + item.avatar_template.replace('{size}', '64') }}
 						/>
 					</Layout>
 					<Layout style={{ flex: 1 }}>
 						<HTML
-							renderers={{
+							/*renderers={{
 								p: (htmlAttribs, children, passProps) => (
-									<Text appearance="hint" style={{ textAlign: 'left', marginRight: 10 }} {...passProps}>
+									<Layout level="4" style={{ textAlign: 'left', marginRight: 10 }} {...passProps}>
 										{children}
-									</Text>
+									</Layout>
 								)
-							}}
+							}}*/
+							style={{ marginLeft: 5 }}
 							html={item.cooked}
-							imagesMaxWidth={Dimensions.get('window').width}
+							imagesInitialDimensions={Dimensions.get('window').width}
 						/>
 					</Layout>
 					<Layout style={{ flex: 0.3 }}>
@@ -92,10 +93,7 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 		if (!loading) {
 			return (
 				<Layout style={{ marginRight: 10, marginLeft: 10 }}>
-					<HeaderComponent></HeaderComponent>
-					<Text category="h3" style={{ borderBottomWidth: 0.2, borderBottomColor: 'gray', paddingBottom: 10 }}>
-						{this.props.navigation.getParam('title', 'no title')}
-					</Text>
+					<HeaderComponent headerTitle={this.props.navigation.getParam('title', 'no title')}></HeaderComponent>
 
 					<List
 						data={postData.post_stream.posts}

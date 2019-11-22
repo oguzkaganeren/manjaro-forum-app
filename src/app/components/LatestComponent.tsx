@@ -120,7 +120,7 @@ export class LatestComponent extends React.Component<LatestProps, LatestState> {
 						<Text appearance="hint" style={{ textAlign: 'right', marginRight: 10 }}>
 							{item.views}
 						</Text>
-						<TimeAgo time={item.last_posted_at} hideAgo={true} />
+						<TimeAgo time={item.last_posted_at} style={{ textAlign: 'right', marginRight: 10 }} hideAgo={true} />
 					</Layout>
 				</Layout>
 			</TouchableOpacity>
