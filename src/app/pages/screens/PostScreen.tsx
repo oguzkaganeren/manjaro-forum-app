@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
+import { StyleSheet, TouchableOpacity, ActivityIndicator, Dimensions, Image } from 'react-native';
 import { Icon, List, ListItem, Avatar, Button, Layout, Text } from 'react-native-ui-kitten';
 import { HeaderComponent } from '../../components/HeaderComponent';
 import HTML from 'react-native-render-html';
@@ -40,6 +40,7 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 			console.log('Error fetching data', err);
 		}
 	}
+
 	_renderItem({ item }) {
 		console.log(item.cooked);
 		return (
@@ -61,16 +62,36 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 					</Layout>
 					<Layout style={{ flex: 1 }}>
 						<HTML
-							/*renderers={{
-								p: (htmlAttribs, children, passProps) => (
-									<Layout level="4" style={{ textAlign: 'left', marginRight: 10 }} {...passProps}>
-										{children}
-									</Layout>
-								)
-							}}*/
+							renderers={{
+								img: (htmlAttribs, children, passProps) => {
+									if (htmlAttribs.class == 'avatar')
+										return (
+											<Avatar
+												size="small"
+												style={{ marginTop: 20, marginBottom: 5, marginLeft: 10 }}
+												source={{ uri: htmlAttribs.src }}
+											/>
+										);
+									else
+										return (
+											<Image
+												style={{
+													width: htmlAttribs.class == 'emoji' ? 20 : Dimensions.get('window').width / 2,
+													height: htmlAttribs.class == 'emoji' ? 20 : Dimensions.get('window').height / 4
+												}}
+												source={{ uri: htmlAttribs.src }}
+											></Image>
+										);
+								}
+
+								//<Image style={{ width: 50, height: 50 }} source={{ uri: htmlAttribs.src }}></Image>
+							}}
 							style={{ marginLeft: 5 }}
 							html={item.cooked}
-							imagesInitialDimensions={Dimensions.get('window').width}
+							imagesInitialDimensions={{
+								width: Dimensions.get('window').width,
+								height: Dimensions.get('window').height
+							}}
 						/>
 					</Layout>
 					<Layout style={{ flex: 0.3 }}>
