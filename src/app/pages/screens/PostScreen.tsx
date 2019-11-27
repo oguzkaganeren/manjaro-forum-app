@@ -1,8 +1,17 @@
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, ActivityIndicator, Dimensions, Image } from 'react-native';
+import {
+	StyleSheet,
+	TouchableOpacity,
+	TouchableWithoutFeedback,
+	ActivityIndicator,
+	Dimensions,
+	Image,
+	Modal
+} from 'react-native';
 import { Icon, List, ListItem, Avatar, Button, Layout, Text } from 'react-native-ui-kitten';
 import { HeaderComponent } from '../../components/HeaderComponent';
 import HTML from 'react-native-render-html';
+import ImageViewer from 'react-native-image-zoom-viewer';
 /**
  * Post props
  */
@@ -15,6 +24,9 @@ export interface PostProps {
 export interface PostState {
 	postData: any;
 	loading: boolean;
+	isModalOpened: boolean;
+	currentImageIndex: number;
+	images: any;
 }
 
 /**
@@ -25,7 +37,10 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 		super(props);
 		this.state = {
 			postData: [],
-			loading: true
+			loading: true,
+			images: [],
+			isModalOpened: false, //Controls if modal is opened or closed
+			currentImageIndex: 0 //Controls initial photo to show for modal
 		};
 	}
 	async componentDidMount() {
@@ -40,7 +55,9 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 			console.log('Error fetching data', err);
 		}
 	}
-
+	openModal(index) {
+		this.setState({ isModalOpened: true, currentImageIndex: index });
+	}
 	_renderItem({ item }) {
 		console.log(item.cooked);
 		return (
@@ -74,13 +91,29 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 										);
 									else
 										return (
-											<Image
-												style={{
-													width: htmlAttribs.class == 'emoji' ? 20 : Dimensions.get('window').width / 2,
-													height: htmlAttribs.class == 'emoji' ? 20 : Dimensions.get('window').height / 4
+											<TouchableWithoutFeedback
+												onPress={() => {
+													this.setState({ images: [{ url: htmlAttribs.src }] });
+													this.openModal(0);
 												}}
-												source={{ uri: htmlAttribs.src }}
-											></Image>
+											>
+												<Image
+													resizeMode="cover"
+													style={{
+														width: htmlAttribs.class == 'emoji' ? 20 : Dimensions.get('window').width / 2,
+														height: htmlAttribs.class == 'emoji' ? 20 : Dimensions.get('window').height / 4
+													}}
+													source={{ uri: htmlAttribs.src }}
+												/>
+											</TouchableWithoutFeedback>
+
+											// <Image
+											// 	style={{
+											// 		width: htmlAttribs.class == 'emoji' ? 20 : Dimensions.get('window').width / 2,
+											// 		height: htmlAttribs.class == 'emoji' ? 20 : Dimensions.get('window').height / 4
+											// 	}}
+											// 	source={{ uri: htmlAttribs.src }}
+											// ></Image>
 										);
 								}
 
@@ -115,7 +148,9 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 			return (
 				<Layout style={{ marginRight: 10, marginLeft: 10 }}>
 					<HeaderComponent headerTitle={this.props.navigation.getParam('title', 'no title')}></HeaderComponent>
-
+					<Modal visible={this.state.isModalOpened} transparent={true}>
+						<ImageViewer imageUrls={this.state.images} index={this.state.currentImageIndex} />
+					</Modal>
 					<List
 						data={postData.post_stream.posts}
 						renderItem={this._renderItem.bind(this)}
