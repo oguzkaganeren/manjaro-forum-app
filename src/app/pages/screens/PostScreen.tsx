@@ -9,8 +9,10 @@ import {
 	Modal,
 	BackHandler
 } from 'react-native';
-import { Icon, List, ListItem, Avatar, Button, Layout, Text } from 'react-native-ui-kitten';
+import { Icon, List, ListItem, Avatar, Layout, Text } from 'react-native-ui-kitten';
+import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import HTML from 'react-native-render-html';
+import { docco } from 'react-syntax-highlighter/styles/hljs';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
 /**
@@ -122,9 +124,8 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 												/>
 											</TouchableWithoutFeedback>
 										);
-								}
-
-								//<Image style={{ width: 50, height: 50 }} source={{ uri: htmlAttribs.src }}></Image>
+								},
+								code: () => <SyntaxHighlighter language="javascript" style={docco} /> //burada kaldın
 							}}
 							style={{ marginLeft: 5 }}
 							html={item.cooked}
@@ -150,10 +151,14 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 	 * @returns
 	 */
 	render() {
+		const codeString = '(num) => num + 1';
 		const { postData, loading } = this.state;
 		if (!loading) {
 			return (
 				<Layout style={{ marginRight: 10, marginLeft: 10 }}>
+					<SyntaxHighlighter language="javascript" style={docco}>
+						{codeString}
+					</SyntaxHighlighter>
 					<Modal visible={this.state.isModalOpened} transparent={true}>
 						<ImageViewer imageUrls={this.state.images} index={this.state.currentImageIndex} />
 					</Modal>
