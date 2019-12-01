@@ -100,6 +100,7 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 												size="small"
 												style={{ marginTop: 20, marginBottom: 5, marginLeft: 10 }}
 												source={{ uri: htmlAttribs.src }}
+												key={item.id}
 											/>
 										);
 									else
@@ -109,6 +110,7 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 													this.setState({ images: [{ url: htmlAttribs.src }] });
 													this.openModal(0);
 												}}
+												key={item.id}
 											>
 												<Image
 													resizeMode="cover"
@@ -119,14 +121,6 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 													source={{ uri: htmlAttribs.src }}
 												/>
 											</TouchableWithoutFeedback>
-
-											// <Image
-											// 	style={{
-											// 		width: htmlAttribs.class == 'emoji' ? 20 : Dimensions.get('window').width / 2,
-											// 		height: htmlAttribs.class == 'emoji' ? 20 : Dimensions.get('window').height / 4
-											// 	}}
-											// 	source={{ uri: htmlAttribs.src }}
-											// ></Image>
 										);
 								}
 
