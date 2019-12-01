@@ -25,6 +25,7 @@ export class HeaderComponent extends React.Component<HeaderProps, HeaderState> {
 	 * Default props of header component
 	 */
 	static defaultProps = { hasBackButton: false, headerTitle: 'Manjaro Forum' };
+
 	MenuIcon = style => <Icon {...style} name="menu-outline" />;
 
 	MenuAction = props => <TopNavigationAction {...props} icon={this.MenuIcon} />;

@@ -6,12 +6,13 @@ import {
 	ActivityIndicator,
 	Dimensions,
 	Image,
-	Modal
+	Modal,
+	BackHandler
 } from 'react-native';
 import { Icon, List, ListItem, Avatar, Button, Layout, Text } from 'react-native-ui-kitten';
-import { HeaderComponent } from '../../components/HeaderComponent';
 import HTML from 'react-native-render-html';
 import ImageViewer from 'react-native-image-zoom-viewer';
+
 /**
  * Post props
  */
@@ -43,6 +44,17 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 			currentImageIndex: 0 //Controls initial photo to show for modal
 		};
 	}
+	componentWillMount() {
+		BackHandler.addEventListener(
+			'hardwareBackPress',
+			function() {
+				const { goBack } = this.props.navigation;
+				this.props.navigation.goBack();
+				return true;
+			}.bind(this)
+		);
+	}
+
 	async componentDidMount() {
 		let itemId = JSON.stringify(this.props.navigation.getParam('itemId', 'NO-ID'));
 		//Have a try and catch block for catching errors.
@@ -55,6 +67,7 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 			console.log('Error fetching data', err);
 		}
 	}
+
 	openModal(index) {
 		this.setState({ isModalOpened: true, currentImageIndex: index });
 	}
@@ -147,7 +160,6 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 		if (!loading) {
 			return (
 				<Layout style={{ marginRight: 10, marginLeft: 10 }}>
-					<HeaderComponent headerTitle={this.props.navigation.getParam('title', 'no title')}></HeaderComponent>
 					<Modal visible={this.state.isModalOpened} transparent={true}>
 						<ImageViewer imageUrls={this.state.images} index={this.state.currentImageIndex} />
 					</Modal>

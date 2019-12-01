@@ -1,24 +1,33 @@
 import React from 'react';
-import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import { HomeScreen } from './app/pages/screens/HomeScreen';
 import { PostScreen } from './app/pages/screens/PostScreen';
 import { mapping, light as lightTheme } from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { ApplicationProvider, IconRegistry, Layout, Text } from 'react-native-ui-kitten';
-
+import { HeaderComponent } from '../src/app/components/HeaderComponent';
+const MyHeader = navigation => {
+	return {
+		header: props => <HeaderComponent headerTitle={navigation.getParam('title')} />
+	};
+};
 /**
  * Define navigator
  */
-const RootSwitch = createSwitchNavigator(
+const RootStack = createStackNavigator(
 	{
 		HomeScreen: { screen: HomeScreen },
 		PostScreen: { screen: PostScreen }
 	},
 	{
-		initialRouteName: 'HomeScreen'
+		initialRouteName: 'HomeScreen',
+		defaultNavigationOptions: ({ navigation }) => {
+			return MyHeader(navigation);
+		}
 	}
 );
-const App = createAppContainer(RootSwitch);
+const App = createAppContainer(RootStack);
 /**View or Fragment??? */
 export default () => (
 	<React.Fragment>

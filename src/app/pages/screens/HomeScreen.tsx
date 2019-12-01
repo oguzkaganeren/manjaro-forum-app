@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { HeaderComponent } from '../../components/HeaderComponent';
 import { LatestComponent } from '../../components/LatestComponent';
 import { Button, Layout, Text } from 'react-native-ui-kitten';
 /**
@@ -36,7 +35,6 @@ export class HomeScreen extends React.Component<HomeProps, HomeState> {
 		const { selectedTab } = this.state;
 		return (
 			<Layout>
-				<HeaderComponent></HeaderComponent>
 				<LatestComponent navigation={this.props.navigation}></LatestComponent>
 			</Layout>
 		);
