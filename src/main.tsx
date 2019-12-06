@@ -5,7 +5,7 @@ import { HomeScreen } from './app/pages/screens/HomeScreen';
 import { PostScreen } from './app/pages/screens/PostScreen';
 import { mapping, light as lightTheme } from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { ApplicationProvider, IconRegistry, Layout, Text } from 'react-native-ui-kitten';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { HeaderComponent } from '../src/app/components/HeaderComponent';
 const MyHeader = navigation => {
 	return {

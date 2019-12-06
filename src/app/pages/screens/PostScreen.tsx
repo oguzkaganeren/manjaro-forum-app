@@ -9,11 +9,12 @@ import {
 	Modal,
 	BackHandler
 } from 'react-native';
-import { Icon, List, ListItem, Avatar, Layout, Text } from 'react-native-ui-kitten';
+import { Icon, List, Card, CardHeader, Avatar, Layout, Text } from '@ui-kitten/components';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import HTML from 'react-native-render-html';
 import { docco } from 'react-syntax-highlighter/styles/hljs';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import TimeAgo from 'react-native-timeago';
 
 /**
  * Post props
@@ -75,23 +76,29 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 	}
 	_renderItem({ item }) {
 		console.log(item.cooked);
-		return (
-			<TouchableOpacity key={item.id}>
-				<Layout
-					style={{
-						flexDirection: 'row',
-						paddingBottom: 5,
-						paddingTop: 5,
-						borderBottomWidth: 0.2,
-						borderBottomColor: 'gray'
-					}}
-				>
-					<Layout style={{ flex: 0.2 }}>
+		const Header = () => (
+			<React.Fragment>
+				<Layout style={[styles.container]}>
+					<Layout style={[styles.layout, { flex: 0.15 }]}>
 						<Avatar
 							style={{ marginTop: 20, marginBottom: 5, marginLeft: 10 }}
 							source={{ uri: 'https://forum.manjaro.org' + item.avatar_template.replace('{size}', '64') }}
 						/>
 					</Layout>
+					<Layout style={[styles.layout, { flex: 0.4 }]}>
+						<Text style={styles.headerText} category="s1">
+							{item.username}
+						</Text>
+					</Layout>
+					<Layout style={[styles.layout, { flex: 0.4 }]}>
+						<TimeAgo time={item.created_at} style={{ textAlign: 'right', marginRight: 10 }} hideAgo={false} />
+					</Layout>
+				</Layout>
+			</React.Fragment>
+		);
+		return (
+			<TouchableOpacity key={item.id}>
+				<Card status="success" header={Header} style={[styles.card, { marginTop: 5, marginBottom: 5 }]}>
 					<Layout style={{ flex: 1 }}>
 						<HTML
 							renderers={{
@@ -125,7 +132,26 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 											</TouchableWithoutFeedback>
 										);
 								},
-								code: () => <SyntaxHighlighter language="javascript" style={docco} /> //burada kaldın
+								code: (htmlAttribs, children, passProps) => {
+									//console.log(children);
+									/* 	const codeString = '(num) => num + 1';
+									return (
+										<SyntaxHighlighter language="javascript" style={docco}>
+											{codeString}
+										</SyntaxHighlighter>
+									); */
+								},
+								blockquote: (htmlAttribs, children, passProps) => {
+									console.log(children);
+									const test = () => <CardHeader title="Maldives" />;
+									return (
+										<Layout>
+											<Card header={test} status="success">
+												{children}
+											</Card>
+										</Layout>
+									);
+								}
 							}}
 							style={{ marginLeft: 5 }}
 							html={item.cooked}
@@ -140,7 +166,7 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 							{item.post_number}
 						</Text>
 					</Layout>
-				</Layout>
+				</Card>
 			</TouchableOpacity>
 		);
 		//return <ListItem title={item.title} description={item.tags} accessory={this.RemoteAvatar} />;
@@ -151,14 +177,10 @@ export class PostScreen extends React.Component<PostProps, PostState> {
 	 * @returns
 	 */
 	render() {
-		const codeString = '(num) => num + 1';
 		const { postData, loading } = this.state;
 		if (!loading) {
 			return (
 				<Layout style={{ marginRight: 10, marginLeft: 10 }}>
-					<SyntaxHighlighter language="javascript" style={docco}>
-						{codeString}
-					</SyntaxHighlighter>
 					<Modal visible={this.state.isModalOpened} transparent={true}>
 						<ImageViewer imageUrls={this.state.images} index={this.state.currentImageIndex} />
 					</Modal>
@@ -179,5 +201,13 @@ const styles: any = StyleSheet.create({
 	a: {
 		fontWeight: '300',
 		color: '#FF3366' // make links coloured pink
+	},
+	container: {
+		flex: 1,
+		flexDirection: 'row'
+	},
+	layout: {
+		flex: 1,
+		justifyContent: 'center'
 	}
 });

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { LatestComponent } from '../../components/LatestComponent';
-import { Button, Layout, Text } from 'react-native-ui-kitten';
+import { Button, Layout, Text } from '@ui-kitten/components';
 /**
  * Home props
  */

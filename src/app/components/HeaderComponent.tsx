@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Platform, View } from 'react-native';
-import { Icon, TopNavigation, TopNavigationAction } from 'react-native-ui-kitten';
+import { Icon, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import Constants from 'expo-constants';
 /**
  * Header props

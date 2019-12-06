@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { Icon, List, ListItem, Avatar, Layout, Text } from 'react-native-ui-kitten';
+import { Icon, List, ListItem, Avatar, Layout, Text } from '@ui-kitten/components';
 import TimeAgo from 'react-native-timeago';
 /**
  * Latest props
